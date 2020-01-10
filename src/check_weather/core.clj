@@ -54,12 +54,12 @@
   (get-in (get-current-weather query)
           [:current :temperature]))
 
-(defn get-weather []
-  (get-temperature-for-query "Krakow"))
+(defn get-weather [city]
+  (str "In " city " there is now " (get-temperature-for-query city) " celcius."))
 
 (defn -main
-  [& args]
-  (prn (get-weather)))
+  [city]
+  (prn (get-weather city)))
 
 ;; zwroc string ile stopni jest w podanym mieście 
 ;; przez main argument od uzytkownika
