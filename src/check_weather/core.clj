@@ -6,6 +6,9 @@
 (def access-key "928b850514d4dfdc3614fb973c27ebea")
 (def endpoint "http://api.weatherstack.com/")
 
+(defn log [& args]
+  (apply println args))
+
 (defn build-current-weather-request-str [query]
   (str endpoint "current?access_key=" access-key "&query=" query))
 
@@ -15,7 +18,7 @@
       (cheshire/parse-string true)))
 
 (defn get-current-weather
-  "Returns a map with current weather informations from Weatherstack API. 
+  "If city found returns a map with current weather informations from Weatherstack API. 
 
   A map in following format is returned:
   {:request {:type \"City\"
@@ -46,28 +49,34 @@
              :precip 0
              :wind_dir \"N\"
              :visibility 16
-             :temperature 7}}"
+             :temperature 7}}
+
+    If the city was not found, returns the following:
+    {:success false
+     :error {:code 615
+             :type request_failed
+             :info Your API request failed. Please try again or contact support.}}"
   [query]
   (send-request (build-current-weather-request-str query)))
 
-(defn get-location-for-query [query]
+(defn get-location [query]
   (get-in (get-current-weather query)
           [:request :query]))
 
-(defn get-temperature-for-query [query]
+(defn get-temperature [query]
   (get-in (get-current-weather query)
           [:current :temperature]))
 
-(defn get-pressure-for-query [query]
+(defn get-pressure [query]
   (get-in (get-current-weather query)
           [:current :pressure]))
 
-(defn get-windspeed-for-query [query]
+(defn get-windspeed [query]
   (get-in (get-current-weather query)
           [:current :wind_speed]))
 
 (defn get-weather [city]
-  (str "In " (get-location-for-query city) " there is now " (get-temperature-for-query city) " celcius, " (get-pressure-for-query city) " hPa and wind is " (get-windspeed-for-query city) " km/h."))
+  (str "In " (get-location city) " there is now " (get-temperature city) " celcius, " (get-pressure city) " hPa and wind is " (get-windspeed city) " km/h."))
 
 (defn -main
   [city]
