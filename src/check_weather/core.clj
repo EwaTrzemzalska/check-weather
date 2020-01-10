@@ -51,13 +51,12 @@
              :visibility 16
              :temperature 7}}
 
-    If the city was not found, returns the following:
-    {:success false
-     :error {:code 615
-             :type request_failed
-             :info Your API request failed. Please try again or contact support.}}"
+  Will throw an error if city is not found"
   [query]
-  (send-request (build-current-weather-request-str query)))
+  (let [response (send-request (build-current-weather-request-str query))]
+    (if (false? (get response :success))
+      (throw (ex-info "Please provide existing city" {:code (get-in response [:error :code])}))
+      response)))
 
 (defn get-location [current-weather]
   (get-in current-weather [:request :query]))
