@@ -8,7 +8,15 @@
 (defn build-request-string [query]
   (str endpoint "current?access_key=" access-key "&query=" query))
 
+(defn send-request [request-string]
+  (-> (client/get request-string)
+      :body))
+
+(defn get-weather []
+  (send-request (build-request-string "New York")))
+
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (println (get-weather)))
+
+;;testy
