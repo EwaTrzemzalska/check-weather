@@ -54,8 +54,17 @@
   (get-in (get-current-weather query)
           [:current :temperature]))
 
+(defn get-pressure-for-query [query]
+  (get-in (get-current-weather query)
+          [:current :pressure])
+  )
+
+(defn get-windspeed-for-query [query]
+  (get-in (get-current-weather query)
+          [:current :wind_speed]))
+
 (defn get-weather [city]
-  (str "In " city " there is now " (get-temperature-for-query city) " celcius."))
+  (str "In " city " there is now " (get-temperature-for-query city) " celcius, " (get-pressure-for-query city) " hPa and wind is " (get-windspeed-for-query city) " km/h." ))
 
 (defn -main
   [city]
