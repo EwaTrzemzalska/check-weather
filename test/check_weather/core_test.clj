@@ -3,5 +3,4 @@
             [check-weather.core :as core]))
 
 (deftest testing-build-request-string
-  (is (= "http://api.weatherstack.com/current?access_key=928b850514d4dfdc3614fb973c27ebea&query=New York" (core/build-request-string "New York")))
-  )
+  (is (= "http://api.weatherstack.com/current?access_key=928b850514d4dfdc3614fb973c27ebea&query=New York" (core/build-request-string "New York"))))
