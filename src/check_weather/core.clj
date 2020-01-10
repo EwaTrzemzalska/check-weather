@@ -50,31 +50,25 @@
   [query]
   (send-request (build-current-weather-request-str query)))
 
+(defn get-location-for-query [query]
+  (get-in (get-current-weather query)
+          [:request :query]))
+
 (defn get-temperature-for-query [query]
   (get-in (get-current-weather query)
           [:current :temperature]))
 
 (defn get-pressure-for-query [query]
   (get-in (get-current-weather query)
-          [:current :pressure])
-  )
+          [:current :pressure]))
 
 (defn get-windspeed-for-query [query]
   (get-in (get-current-weather query)
           [:current :wind_speed]))
 
 (defn get-weather [city]
-  (str "In " city " there is now " (get-temperature-for-query city) " celcius, " (get-pressure-for-query city) " hPa and wind is " (get-windspeed-for-query city) " km/h." ))
+  (str "In " (get-location-for-query city) " there is now " (get-temperature-for-query city) " celcius, " (get-pressure-for-query city) " hPa and wind is " (get-windspeed-for-query city) " km/h."))
 
 (defn -main
   [city]
   (prn (get-weather city)))
-
-;; zwroc string ile stopni jest w podanym mieście 
-;; przez main argument od uzytkownika
-;; weather New York - "In New York there is now 24 celcius"
-;; 1. get temperature value from map 
-;; 2. format response [temperature, city]
-;; 3. get input from user 
-;; 4. return formated response 
-
