@@ -1,5 +1,6 @@
 (ns check-weather.core
-  (:require [clj-http.client :as client])
+  (:require [clj-http.client :as client] 
+            [cheshire.core :as cheshire])
   (:gen-class))
 
 (def access-key "928b850514d4dfdc3614fb973c27ebea")
@@ -10,7 +11,8 @@
 
 (defn send-request [request-string]
   (-> (client/get request-string)
-      :body))
+      :body
+      (cheshire/parse-string true)))
 
 (defn get-weather []
   (send-request (build-request-string "New York")))
