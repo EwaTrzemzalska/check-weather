@@ -59,25 +59,24 @@
   [query]
   (send-request (build-current-weather-request-str query)))
 
-(defn get-location [query]
-  (get-in (get-current-weather query)
-          [:request :query]))
+(defn get-location [current-weather]
+  (get-in current-weather [:request :query]))
 
-(defn get-temperature [query]
-  (get-in (get-current-weather query)
-          [:current :temperature]))
+(defn get-temperature [current-weather]
+  (get-in current-weather [:current :temperature]))
 
-(defn get-pressure [query]
-  (get-in (get-current-weather query)
-          [:current :pressure]))
+(defn get-pressure [current-weather]
+  (get-in current-weather [:current :pressure]))
 
-(defn get-windspeed [query]
-  (get-in (get-current-weather query)
-          [:current :wind_speed]))
+(defn get-windspeed [current-weather]
+  (get-in current-weather [:current :wind_speed]))
 
-(defn get-weather [city]
-  (str "In " (get-location city) " there is now " (get-temperature city) " celcius, " (get-pressure city) " hPa and wind is " (get-windspeed city) " km/h."))
+(defn get-weather [query]
+  (let [current-weather (get-current-weather query)]
+    (str "In " (get-location current-weather) " there is now " (get-temperature current-weather) " celcius, " (get-pressure current-weather) " hPa and wind is " (get-windspeed current-weather) " km/h."))
+  
+  )
 
 (defn -main
-  [city]
-  (prn (get-weather city)))
+  [query]
+  (prn (get-weather query)))
