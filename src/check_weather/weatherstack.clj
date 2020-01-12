@@ -2,7 +2,6 @@
   (:require [clj-http.client :as client]
             [cheshire.core :as cheshire]))
 
-
 (def access-key "928b850514d4dfdc3614fb973c27ebea")
 (def endpoint "http://api.weatherstack.com/")
 
