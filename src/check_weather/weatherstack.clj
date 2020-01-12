@@ -5,10 +5,10 @@
 (def access-key "928b850514d4dfdc3614fb973c27ebea")
 (def endpoint "http://api.weatherstack.com/")
 
-(defn build-current-weather-request-str [query]
+(defn- build-current-weather-request-str [query]
   (str endpoint "current?access_key=" access-key "&query=" query))
 
-(defn send-request [request-string]
+(defn- send-request [request-string]
   (-> (client/get request-string)
       :body
       (cheshire/parse-string true)))
