@@ -9,4 +9,6 @@
   :plugins [[lein-cljfmt "0.6.6"]]
   :main ^:skip-aot check-weather.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:plugins [[lein-binplus "0.6.5"]]}}
+   :bin {:name "check-weather"})
